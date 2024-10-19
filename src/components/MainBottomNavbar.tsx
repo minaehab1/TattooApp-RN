@@ -48,8 +48,8 @@ const MainBottomNavbar: React.FC<BottomTabBarProps> = ({ state, descriptors, nav
             onPress={onPress}
             style={styles.tabItem}
           >
-            <Ionicons name={iconName} size={24} color={isFocused ? '#607AFB' : 'gray'} />
-            <Text style={[styles.tabText, { color: isFocused ? '#607AFB' : 'gray' }]}>
+            <Ionicons name={iconName} size={24} color={isFocused ? '#607AFB' : '#9CA3AF'} />
+            <Text style={[styles.tabText, { color: isFocused ? '#607AFB' : '#9CA3AF' }]}>
               {label}
             </Text>
           </TouchableOpacity>
@@ -62,8 +62,8 @@ const MainBottomNavbar: React.FC<BottomTabBarProps> = ({ state, descriptors, nav
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: 'white',
-    height: 60,
+    backgroundColor: '#F9FAFB',
+    height: 70,
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',
   },
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 12,
     marginTop: 4,
+    fontWeight: '500',
   },
 });
 

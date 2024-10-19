@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Slider from '@react-native-community/slider';
 import Button from '../components/Button';
@@ -87,27 +87,29 @@ const PriceCalculatorScreen = () => {
     <View style={styles.section}>
       <Text style={styles.sectionTitle}>Size Specification</Text>
       <View style={styles.sliderContainer}>
-        <Text>Height: {height} cm</Text>
+        <Text>Height: {Math.round(height)} cm</Text>
         <Slider
           style={styles.slider}
           minimumValue={1}
           maximumValue={100}
           value={height}
-          onValueChange={setHeight}
+          onValueChange={(value) => setHeight(Math.round(value))}
           minimumTrackTintColor="#607AFB"
           maximumTrackTintColor="#D1D5DB"
+          step={1}
         />
       </View>
       <View style={styles.sliderContainer}>
-        <Text>Width: {width} cm</Text>
+        <Text>Width: {Math.round(width)} cm</Text>
         <Slider
           style={styles.slider}
           minimumValue={1}
           maximumValue={100}
           value={width}
-          onValueChange={setWidth}
+          onValueChange={(value) => setWidth(Math.round(value))}
           minimumTrackTintColor="#607AFB"
           maximumTrackTintColor="#D1D5DB"
+          step={1}
         />
       </View>
     </View>
@@ -174,7 +176,7 @@ const PriceCalculatorScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.title}>Tattoo Price Calculator</Text>
         {renderStyleSelection()}
         {renderDetailsLevel()}
@@ -191,11 +193,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F3F4F6',
   },
+  scrollContent: {
+    paddingHorizontal: 16, // Add horizontal padding
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    marginTop: 16, // Add some top margin
   },
   section: {
     backgroundColor: '#FFFFFF',

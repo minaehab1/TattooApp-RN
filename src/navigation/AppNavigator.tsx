@@ -4,8 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import BookingScreen from '../screens/BookingScreen';
 import RewardsScreen from '../screens/RewardsScreen';
-import CartScreen from '../screens/CartScreen';
 import PriceCalculatorScreen from '../screens/PriceCalculatorScreen';
+import CartScreen from '../screens/CartScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,10 +21,10 @@ export const AppNavigator = () => {
             iconName = focused ? 'calendar' : 'calendar-outline';
           } else if (route.name === 'Rewards') {
             iconName = focused ? 'gift' : 'gift-outline';
-          } else if (route.name === 'Cart') {
-            iconName = focused ? 'cart' : 'cart-outline';
           } else if (route.name === 'Calculator') {
             iconName = focused ? 'calculator' : 'calculator-outline';
+          } else if (route.name === 'Cart') {
+            iconName = focused ? 'cart' : 'cart-outline';
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -33,8 +33,8 @@ export const AppNavigator = () => {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Booking" component={BookingScreen} />
       <Tab.Screen name="Rewards" component={RewardsScreen} />
-      <Tab.Screen name="Cart" component={CartScreen} />
       <Tab.Screen name="Calculator" component={PriceCalculatorScreen} />
+      <Tab.Screen name="Cart" component={CartScreen} />
     </Tab.Navigator>
   );
 };

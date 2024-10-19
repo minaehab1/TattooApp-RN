@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { AppProvider } from './src/context/AppContext';
-import { useFonts } from 'expo-font';
+import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    ...Ionicons.font,
-  });
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync(Ionicons.font);
+      setFontsLoaded(true);
+    }
+    loadFonts();
+  }, []);
 
   if (!fontsLoaded) {
     return null; // Or return a loading screen

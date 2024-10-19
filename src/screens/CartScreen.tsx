@@ -73,7 +73,9 @@ const CartScreen = () => {
               style={styles.input} 
               placeholder="Enter promo code"
             />
-            <Button title="Apply" onPress={() => {}} />
+            <TouchableOpacity style={styles.applyButton}>
+              <Text style={styles.applyButtonText}>Apply</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -212,10 +214,25 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    height: 40,
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
-    padding: 12,
+    paddingHorizontal: 12,
     marginRight: 12,
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+  },
+  applyButton: {
+    backgroundColor: '#607AFB',
+    height: 40,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  applyButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   orderSummary: {
     backgroundColor: '#FFFFFF',

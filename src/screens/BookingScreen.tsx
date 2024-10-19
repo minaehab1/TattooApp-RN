@@ -73,38 +73,37 @@ const BookingScreen = () => {
     </View>
   );
 
-  const renderTimeSelection = () => (
+  const renderCombinedSection = () => (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>Select Time</Text>
-      <TouchableOpacity 
-        style={styles.dropdown}
-        onPress={() => setShowTimeDropdown(!showTimeDropdown)}
-      >
-        <Text>{selectedTime || 'Choose a time slot'}</Text>
-        <Ionicons name={showTimeDropdown ? "chevron-up" : "chevron-down"} size={24} color="#000" />
-      </TouchableOpacity>
-      {showTimeDropdown && (
-        <View style={styles.dropdownContent}>
-          {timeSlots.map((time) => (
-            <TouchableOpacity
-              key={time}
-              style={styles.timeSlotItem}
-              onPress={() => {
-                setSelectedTime(time);
-                setShowTimeDropdown(false);
-              }}
-            >
-              <Text style={styles.timeSlotText}>{time}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      )}
-    </View>
-  );
+      <View style={styles.dropdownContainer}>
+        <TouchableOpacity 
+          style={styles.dropdown}
+          onPress={() => setShowTimeDropdown(!showTimeDropdown)}
+        >
+          <View style={styles.dropdownContent}>
+            <Ionicons name="time-outline" size={24} color="#607AFB" style={styles.clockIcon} />
+            <Text>{selectedTime || 'Choose a time slot'}</Text>
+          </View>
+          <Ionicons name={showTimeDropdown ? "chevron-up" : "chevron-down"} size={24} color="#000" />
+        </TouchableOpacity>
+        {showTimeDropdown && (
+          <View style={styles.dropdownList}>
+            {timeSlots.map((time) => (
+              <TouchableOpacity
+                key={time}
+                style={styles.timeSlotItem}
+                onPress={() => {
+                  setSelectedTime(time);
+                  setShowTimeDropdown(false);
+                }}
+              >
+                <Text style={styles.timeSlotText}>{time}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+      </View>
 
-  const renderTattooDetails = () => (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>Tattoo Details</Text>
       <View style={styles.sizeList}>
         {tattooSizes.map((size) => (
           <TouchableOpacity
@@ -122,12 +121,7 @@ const BookingScreen = () => {
           </TouchableOpacity>
         ))}
       </View>
-    </View>
-  );
 
-  const renderTattooDescription = () => (
-    <View style={styles.section}>
-      <Text style={styles.sectionTitle}>Tattoo Description</Text>
       <TextInput
         style={styles.descriptionInput}
         multiline
@@ -145,9 +139,7 @@ const BookingScreen = () => {
         <Text style={styles.title}>Book Your Tattoo Appointment</Text>
         {renderArtistSelection()}
         {renderDateSelection()}
-        {renderTimeSelection()}
-        {renderTattooDetails()}
-        {renderTattooDescription()}
+        {renderCombinedSection()}
         <View style={styles.buttonContainer}>
           <Button 
             title="Book Appointment" 
@@ -203,6 +195,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  dropdownContainer: {
+    marginBottom: 16,
+    zIndex: 1,
+  },
   dropdown: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -211,17 +207,31 @@ const styles = StyleSheet.create({
     borderColor: '#D1D5DB',
     borderRadius: 4,
     padding: 12,
-    marginBottom: 8,
   },
   dropdownContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  clockIcon: {
+    marginRight: 8,
+  },
+  dropdownList: {
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    right: 0,
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#D1D5DB',
     borderRadius: 4,
     marginTop: 4,
+    maxHeight: 200,
+    zIndex: 2,
   },
   timeSlotItem: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#D1D5DB',
   },
@@ -232,6 +242,7 @@ const styles = StyleSheet.create({
   sizeList: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 16,
   },
   sizeItem: {
     flex: 1,
@@ -251,6 +262,15 @@ const styles = StyleSheet.create({
   selectedItemText: {
     color: '#FFFFFF',
   },
+  descriptionInput: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    borderRadius: 8,
+    padding: 12,
+    minHeight: 100,
+    textAlignVertical: 'top',
+  },
   buttonContainer: {
     marginHorizontal: 16,
     marginBottom: 16,
@@ -261,15 +281,6 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 24,
     marginHorizontal: 16,
-  },
-  descriptionInput: {
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-    borderRadius: 8,
-    padding: 12,
-    minHeight: 100,
-    textAlignVertical: 'top',
   },
 });
 

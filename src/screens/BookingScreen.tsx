@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Calendar } from 'react-native-calendars';
+import { Calendar, DateData } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../components/Button';
 
@@ -134,8 +134,8 @@ const BookingScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
+    <SafeAreaView style={styles.safeArea} edges={['left', 'right']}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.title}>Book Your Tattoo Appointment</Text>
         {renderArtistSelection()}
         {renderDateSelection()}
@@ -155,23 +155,28 @@ const BookingScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: '#F3F4F6',
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: 8,
+    paddingTop: 0,
+    paddingBottom: 60,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center',
-    color: '#333',
+    marginTop: 16,
   },
   section: {
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
-    marginHorizontal: 16,
+    marginHorizontal: 8,
   },
   sectionTitle: {
     fontSize: 18,
@@ -272,7 +277,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   buttonContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: 8,
     marginBottom: 16,
   },
   disclaimer: {
@@ -280,7 +285,7 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 24,
     marginBottom: 24,
-    marginHorizontal: 16,
+    marginHorizontal: 8,
   },
 });
 

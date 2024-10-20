@@ -175,7 +175,7 @@ const PriceCalculatorScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.safeArea} edges={['left', 'right']}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.title}>Tattoo Price Calculator</Text>
         {renderStyleSelection()}
@@ -189,25 +189,28 @@ const PriceCalculatorScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: '#F3F4F6',
   },
   scrollContent: {
-    paddingHorizontal: 16, // Add horizontal padding
+    flexGrow: 1,
+    paddingHorizontal: 8,
+    paddingTop: 0,
+    paddingBottom: 60,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center',
-    marginTop: 16, // Add some top margin
+    marginTop: 16,
   },
   section: {
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
+    marginHorizontal: 8,
   },
   sectionTitle: {
     fontSize: 18,
@@ -319,6 +322,17 @@ const styles = StyleSheet.create({
     color: '#EF4444',
     marginLeft: 8,
     flex: 1,
+  },
+  buttonContainer: {
+    marginHorizontal: 8,
+    marginBottom: 16,
+  },
+  disclaimer: {
+    textAlign: 'center',
+    color: '#666',
+    marginTop: 24,
+    marginBottom: 24,
+    marginHorizontal: 8,
   },
 });
 

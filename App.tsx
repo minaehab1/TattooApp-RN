@@ -1,42 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { AppProvider } from './src/context/AppContext';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
+import ErrorBoundary from './src/components/ErrorBoundary';
 
-export default function App() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-
-  useEffect(() => {
-    async function loadFonts() {
-      await Font.loadAsync(Ionicons.font);
-      setFontsLoaded(true);
-    }
-    loadFonts();
-  }, []);
-
-  if (!fontsLoaded) {
-    return null; // Or return a loading screen
-  }
-
+const App = () => {
   return (
-    <AppProvider>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <View style={styles.container}>
+    <ErrorBoundary>
+      <AppProvider>
+        <SafeAreaProvider>
+          <NavigationContainer>
             <AppNavigator />
-          </View>
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </AppProvider>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </AppProvider>
+    </ErrorBoundary>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+export default App;

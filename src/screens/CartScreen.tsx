@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 import Button from '../components/Button';
+import { Ionicons } from '@expo/vector-icons';
 
 interface CartItem {
   id: string;
@@ -58,8 +58,8 @@ const CartScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
+    <SafeAreaView style={styles.safeArea} edges={['left', 'right']}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.title}>Your Cart</Text>
         
         <View style={styles.cartItems}>
@@ -73,7 +73,7 @@ const CartScreen = () => {
               style={styles.input} 
               placeholder="Enter promo code"
             />
-            <TouchableOpacity style={styles.applyButton}>
+            <TouchableOpacity style={styles.applyButton} onPress={() => {}}>
               <Text style={styles.applyButtonText}>Apply</Text>
             </TouchableOpacity>
           </View>
@@ -105,11 +105,11 @@ const CartScreen = () => {
 
         {showBreakdown && (
           <View style={styles.breakdownDetails}>
-            <View style={styles.summaryRow}>
+            <View style={styles.breakdownRow}>
               <Text>Total Hours:</Text>
               <Text>5</Text>
             </View>
-            <View style={styles.summaryRow}>
+            <View style={styles.breakdownRow}>
               <Text>Rate per Hour:</Text>
               <Text>$100</Text>
             </View>
@@ -119,6 +119,7 @@ const CartScreen = () => {
         <Button 
           title="Proceed to Checkout" 
           onPress={() => console.log('Proceed to checkout')}
+          style={styles.checkoutButton}
         />
 
         <Text style={styles.disclaimer}>
@@ -130,16 +131,21 @@ const CartScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: '#F3F4F6',
-    padding: 16,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: 15,
+    paddingTop: 0,
+    paddingBottom: 60,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 24,
-    color: '#333',
+    marginTop: 16,
   },
   cartItems: {
     marginBottom: 24,
@@ -214,7 +220,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 40,
+    height: 40, // Set a fixed height
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
     paddingHorizontal: 12,
@@ -223,15 +229,15 @@ const styles = StyleSheet.create({
     borderColor: '#D1D5DB',
   },
   applyButton: {
-    backgroundColor: '#607AFB',
-    height: 40,
+    height: 40, // Match the height of the input
     paddingHorizontal: 16,
-    borderRadius: 8,
+    backgroundColor: '#607AFB',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 8,
   },
   applyButtonText: {
-    color: 'white',
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
   orderSummary: {
@@ -261,7 +267,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
     padding: 16,
-    marginBottom: 24,
+    marginBottom: 12,
   },
   breakdownDetails: {
     backgroundColor: '#FFFFFF',
@@ -269,11 +275,20 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 24,
   },
+  breakdownRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  checkoutButton: {
+    marginBottom: 24,
+  },
   disclaimer: {
     textAlign: 'center',
     color: '#666',
-    marginTop: 24,
+    marginTop: 16, // Add top margin
     marginBottom: 24,
+    paddingTop: 16, // Add top padding
   },
 });
 

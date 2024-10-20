@@ -1,7 +1,5 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import BookingScreen from '../screens/BookingScreen';
 import RewardsScreen from '../screens/RewardsScreen';
@@ -10,40 +8,46 @@ import CartScreen from '../screens/CartScreen';
 import MainBottomNavbar from '../components/MainBottomNavbar';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
-const TabNavigator = () => {
+export const AppNavigator = () => {
   return (
     <Tab.Navigator
       tabBar={(props) => <MainBottomNavbar {...props} />}
       screenOptions={{
         headerShown: true,
         headerStyle: {
-          backgroundColor: '#F9FAFB',
+          backgroundColor: '#FFFFFF', // Changed to white
+          elevation: 0, // Removes shadow on Android
+          shadowOpacity: 0, // Removes shadow on iOS
         },
-        headerTintColor: '#111827',
+        headerTintColor: '#333', // This is the color of the header text
         headerTitleStyle: {
           fontWeight: 'bold',
         },
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Booking" component={BookingScreen} />
-      <Tab.Screen name="Rewards" component={RewardsScreen} />
-      <Tab.Screen name="Calculator" component={PriceCalculatorScreen} />
-      <Tab.Screen name="Cart" component={CartScreen} />
-    </Tab.Navigator>
-  );
-};
-
-export const AppNavigator = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Main"
-        component={TabNavigator}
-        options={{ headerShown: false }}
+      <Tab.Screen 
+        name="Home" 
+        component={HomeScreen} 
+        options={{ title: 'Home' }}
       />
-    </Stack.Navigator>
+      <Tab.Screen 
+        name="Booking" 
+        component={BookingScreen}
+      />
+      <Tab.Screen 
+        name="Rewards" 
+        component={RewardsScreen}
+      />
+      <Tab.Screen 
+        name="Calculator" 
+        component={PriceCalculatorScreen}
+        options={{ title: 'Calculator' }}
+      />
+      <Tab.Screen 
+        name="Cart" 
+        component={CartScreen}
+      />
+    </Tab.Navigator>
   );
 };

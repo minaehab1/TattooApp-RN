@@ -86,50 +86,52 @@ const BookingScreen = () => {
           </View>
           <Ionicons name={showTimeDropdown ? "chevron-up" : "chevron-down"} size={24} color="#000" />
         </TouchableOpacity>
-        {showTimeDropdown && (
-          <View style={styles.dropdownList}>
-            {timeSlots.map((time) => (
-              <TouchableOpacity
-                key={time}
-                style={styles.timeSlotItem}
-                onPress={() => {
-                  setSelectedTime(time);
-                  setShowTimeDropdown(false);
-                }}
-              >
-                <Text style={styles.timeSlotText}>{time}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
       </View>
+      {showTimeDropdown && (
+        <View style={styles.dropdownList}>
+          {timeSlots.map((time) => (
+            <TouchableOpacity
+              key={time}
+              style={styles.timeSlotItem}
+              onPress={() => {
+                setSelectedTime(time);
+                setShowTimeDropdown(false);
+              }}
+            >
+              <Text style={styles.timeSlotText}>{time}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
 
-      <View style={styles.sizeList}>
-        {tattooSizes.map((size) => (
-          <TouchableOpacity
-            key={size}
-            style={[
-              styles.sizeItem,
-              selectedSize === size && styles.selectedItem
-            ]}
-            onPress={() => setSelectedSize(size)}
-          >
-            <Text style={[
-              styles.sizeText,
-              selectedSize === size && styles.selectedItemText
-            ]}>{size}</Text>
-          </TouchableOpacity>
-        ))}
+      <View style={[styles.restOfContent, showTimeDropdown && styles.extraPadding]}>
+        <View style={styles.sizeList}>
+          {tattooSizes.map((size) => (
+            <TouchableOpacity
+              key={size}
+              style={[
+                styles.sizeItem,
+                selectedSize === size && styles.selectedItem
+              ]}
+              onPress={() => setSelectedSize(size)}
+            >
+              <Text style={[
+                styles.sizeText,
+                selectedSize === size && styles.selectedItemText
+              ]}>{size}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <TextInput
+          style={styles.descriptionInput}
+          multiline
+          numberOfLines={4}
+          placeholder="Describe your tattoo idea..."
+          value={tattooDescription}
+          onChangeText={setTattooDescription}
+        />
       </View>
-
-      <TextInput
-        style={styles.descriptionInput}
-        multiline
-        numberOfLines={4}
-        placeholder="Describe your tattoo idea..."
-        value={tattooDescription}
-        onChangeText={setTattooDescription}
-      />
     </View>
   );
 
@@ -202,7 +204,6 @@ const styles = StyleSheet.create({
   },
   dropdownContainer: {
     marginBottom: 16,
-    zIndex: 1,
   },
   dropdown: {
     flexDirection: 'row',
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#D1D5DB',
-    borderRadius: 4,
+    borderRadius: 8, // Increased border radius for slightly rounded corners
     padding: 12,
   },
   dropdownContent: {
@@ -222,23 +223,16 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   dropdownList: {
-    position: 'absolute',
-    top: '100%',
-    left: 0,
-    right: 0,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#D1D5DB',
-    borderRadius: 4,
+    borderRadius: 8, // Added border radius for slightly rounded corners
     marginTop: 4,
-    maxHeight: 200,
-    zIndex: 2,
+    marginBottom: 16,
   },
   timeSlotItem: {
     paddingVertical: 8,
     paddingHorizontal: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#D1D5DB',
   },
   timeSlotText: {
     fontSize: 16,
@@ -286,6 +280,12 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 24,
     marginHorizontal: 8,
+  },
+  restOfContent: {
+    // No padding by default
+  },
+  extraPadding: {
+    paddingTop: 16, // Add extra padding when dropdown is open
   },
 });
 

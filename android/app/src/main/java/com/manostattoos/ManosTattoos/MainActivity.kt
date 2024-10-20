@@ -1,4 +1,4 @@
-package com.anonymous.TattooAppRN
+package com.manostattoos.ManosTattoos
 
 import android.os.Build
 import android.os.Bundle

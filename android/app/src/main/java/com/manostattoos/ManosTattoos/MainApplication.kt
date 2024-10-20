@@ -1,4 +1,4 @@
-package com.anonymous.TattooAppRN
+package com.manostattoos.ManosTattoos
 
 import android.app.Application
 import android.content.res.Configuration

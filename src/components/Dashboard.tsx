@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import BottomNavbar from './BottomNavbar';
+import MainBottomNavbar from './MainBottomNavbar';
 
 const CustomBadge = ({ children }: { children: React.ReactNode }) => (
   <View style={styles.badge}>
@@ -48,7 +48,7 @@ const Dashboard = () => {
         
         {/* Add more sections (Booking Status, Gallery, Promotions, News & Events) following the same pattern */}
       </ScrollView>
-      <BottomNavbar activePage="/" />
+      <MainBottomNavbar />
     </View>
   );
 };

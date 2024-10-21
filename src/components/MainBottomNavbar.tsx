@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import TabBarButton from './TabBarButton';
+import TabBarButton from './TabBarButton';  // Make sure this path is correct
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 const MainBottomNavbar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {

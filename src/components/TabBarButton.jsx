@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { icons } from '../../assets/icons';
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
@@ -19,29 +19,11 @@ const TabBarButton = (props) => {
         const scaleValue = interpolate(
             scale.value,
             [0, 1],
-            [1, 1.4]
-        );
-        const top = interpolate(
-            scale.value,
-            [0, 1],
-            [0, 8]
+            [0.8, 1.2]
         );
 
         return {
             transform: [{ scale: scaleValue }],
-            top
-        }
-    });
-
-    const animatedTextStyle = useAnimatedStyle(() => {
-        const opacity = interpolate(
-            scale.value,
-            [0, 1],
-            [1, 0]
-        );
-
-        return {
-            opacity
         }
     });
 
@@ -53,10 +35,10 @@ const TabBarButton = (props) => {
                 {IconComponent && <IconComponent color={color} />}
             </Animated.View>
             
-            <Animated.Text style={[{ 
+            <Animated.Text style={{ 
                 color,
                 fontSize: 11
-            }, animatedTextStyle]}>
+            }}>
                 {label}
             </Animated.Text>
         </Pressable>

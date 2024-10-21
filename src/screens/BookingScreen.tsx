@@ -44,7 +44,7 @@ const BookingScreen = () => {
     <View style={styles.section}>
       <Text style={styles.sectionTitle}>Select Date</Text>
       <Calendar
-        onDayPress={(day) => setSelectedDate(day.dateString)}
+        onDayPress={(day: { dateString: string }) => setSelectedDate(day.dateString)}
         markedDates={{
           [selectedDate]: { selected: true, selectedColor: '#607AFB' }
         }}

@@ -30,7 +30,6 @@
     "plugins": [
       "expo-font"
     ],
-    "sdkVersion": "51.0.0",
     "extra": {
       "eas": {
         "projectId": "729276a6-d210-485d-9ffe-83f1804687f2"

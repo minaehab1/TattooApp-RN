@@ -1,11 +1,14 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, StyleSheet } from 'react-native';
+import TabBarButton from './TabBarButton';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 const MainBottomNavbar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
+  const primaryColor = '#607AFB';
+  const greyColor = '#737373';
+
   return (
-    <View style={styles.container}>
+    <View style={styles.tabbar}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -29,30 +32,23 @@ const MainBottomNavbar: React.FC<BottomTabBarProps> = ({ state, descriptors, nav
           }
         };
 
-        let iconName;
-        if (route.name === 'Home') {
-          iconName = isFocused ? 'home' : 'home-outline';
-        } else if (route.name === 'Booking') {
-          iconName = isFocused ? 'calendar' : 'calendar-outline';
-        } else if (route.name === 'Rewards') {
-          iconName = isFocused ? 'gift' : 'gift-outline';
-        } else if (route.name === 'Calculator') {
-          iconName = isFocused ? 'calculator' : 'calculator-outline';
-        } else if (route.name === 'Cart') {
-          iconName = isFocused ? 'cart' : 'cart-outline';
-        }
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
 
         return (
-          <TouchableOpacity
-            key={index}
+          <TabBarButton 
+            key={route.key}
             onPress={onPress}
-            style={styles.tabItem}
-          >
-            <Ionicons name={iconName} size={24} color={isFocused ? '#607AFB' : '#9CA3AF'} />
-            <Text style={[styles.tabText, { color: isFocused ? '#607AFB' : '#9CA3AF' }]}>
-              {label.toString()}
-            </Text>
-          </TouchableOpacity>
+            onLongPress={onLongPress}
+            isFocused={isFocused}
+            routeName={route.name}
+            color={isFocused ? primaryColor : greyColor}
+            label={label as string}
+          />
         );
       })}
     </View>
@@ -60,25 +56,23 @@ const MainBottomNavbar: React.FC<BottomTabBarProps> = ({ state, descriptors, nav
 };
 
 const styles = StyleSheet.create({
-  container: {
+  tabbar: {
+    position: 'absolute', 
+    bottom: 25,
     flexDirection: 'row',
-    backgroundColor: '#F9FAFB',
-    height: 75, // Increased height to accommodate more padding
-    borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    paddingBottom: 15, // Increased padding at the bottom
-    paddingTop: 5,
-  },
-  tabItem: {
-    flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  tabText: {
-    fontSize: 12,
-    marginTop: 4,
-    fontWeight: '500',
-  },
+    backgroundColor: 'white',
+    marginHorizontal: 20,
+    paddingVertical: 15,
+    borderRadius: 25,
+    borderCurve: 'continuous',
+    shadowColor: 'black',
+    shadowOffset: {width: 0, height: 10},
+    shadowRadius: 10,
+    shadowOpacity: 0.1,
+    elevation: 5,
+  }
 });
 
 export default MainBottomNavbar;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import MainBottomNavbar from './MainBottomNavbar';
 
 const CustomBadge = ({ children }: { children: React.ReactNode }) => (
@@ -10,6 +11,8 @@ const CustomBadge = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Dashboard = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -48,7 +51,11 @@ const Dashboard = () => {
         
         {/* Add more sections (Booking Status, Gallery, Promotions, News & Events) following the same pattern */}
       </ScrollView>
-      <MainBottomNavbar />
+      <MainBottomNavbar 
+        state={navigation.getState()}
+        descriptors={navigation.getDescriptors()}
+        navigation={navigation}
+      />
     </View>
   );
 };

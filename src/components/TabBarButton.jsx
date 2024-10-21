@@ -32,7 +32,7 @@ const TabBarButton = (props) => {
     return (
         <Pressable onPress={onPress} onLongPress={onLongPress} style={styles.container}>
             <Animated.View style={[animatedIconStyle]}>
-                {IconComponent && <IconComponent color={color} />}
+                {IconComponent && <IconComponent focused={isFocused} color={color} />}
             </Animated.View>
             
             <Animated.Text style={{ 

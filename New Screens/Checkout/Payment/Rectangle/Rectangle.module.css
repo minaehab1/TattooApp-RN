@@ -1,0 +1,86 @@
+.button.button {
+  left: 86.0061%;
+  right: 5.0387%;
+  top: 42.8571%;
+  bottom: 14.2857%;
+}
+.ellipse149.ellipse149 {
+  right: 0.2537px;
+}
+.ellipse149 {
+  right: 0.2537px;
+}
+.icon {
+  width: 100%;
+  height: 100%;
+}
+.iconMaterialEdit.iconMaterialEdit {
+  left: 9.0636px;
+  width: 14.0659px;
+}
+.iconMaterialEdit {
+  left: 9.0636px;
+  width: 14.0659px;
+}
+.icon2 {
+  width: 100%;
+  height: 100%;
+}
+.root {
+  position: absolute;
+  left: 20px;
+  top: 115px;
+  width: 349px;
+  height: 70px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.rectangle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+._26DuongSo2ThaoDienWardAnPhuDis {
+  position: absolute;
+  left: 5.0387%;
+  right: 24.215%;
+  top: calc(50% - -10.5px);
+  height: 29px;
+  flex-direction: column;
+  transform: translateY(-50%);
+}
+.textBlock {
+  color: #000;
+  font-size: 10px;
+  line-height: 15px;
+  font-family: Nunito Sans, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif;
+}
+.textBlock2 {
+  margin-top: 0;
+  color: #000;
+  font-size: 10px;
+  line-height: 15px;
+  font-family: Nunito Sans, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif;
+}
+.title {
+  color: #202020;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: bold;
+  font-family: Raleway, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif;
+  letter-spacing: -0.14px;
+  position: absolute;
+  left: 5.0387%;
+  right: 55.2598%;
+  top: calc(50% - 16px);
+  height: min-content;
+  flex-direction: column;
+  transform: translateY(-50%);
+}

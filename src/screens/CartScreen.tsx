@@ -3,8 +3,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../App';
+
+// Add type for navigation
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Checkout'>;
 
 const CartScreen = () => {
+  const navigation = useNavigation<NavigationProp>();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }} edges={['bottom']}>
       <ScrollView>
@@ -132,7 +140,7 @@ const CartScreen = () => {
               <SummaryText style={{ fontWeight: 'bold' }}>Total</SummaryText>
               <SummaryAmount style={{ fontWeight: 'bold' }}>$208.25</SummaryAmount>
             </SummaryRow>
-            <CheckoutButton>
+            <CheckoutButton onPress={() => navigation.navigate('Checkout')}>
               <CheckoutText>Checkout</CheckoutText>
             </CheckoutButton>
           </CheckoutSummary>

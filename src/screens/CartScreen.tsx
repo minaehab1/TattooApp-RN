@@ -1,295 +1,443 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Button from '../components/Button';
+import { ScrollView } from 'react-native';
+import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  appointment: string;
-}
-
 const CartScreen = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    { id: '1', name: 'Custom Tattoo Design', price: 150, quantity: 1, appointment: 'Nov 12, 3 PM' },
-    { id: '2', name: 'Small Tattoo Session', price: 100, quantity: 1, appointment: 'Nov 12, 3 PM' },
-  ]);
-  const [showBreakdown, setShowBreakdown] = useState(false);
-
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const tax = subtotal * 0.1; // Assuming 10% tax
-  const total = subtotal + tax;
-
-  const updateQuantity = (id: string, change: number) => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: Math.max(0, item.quantity + change) } : item
-      ).filter(item => item.quantity > 0)
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
-
-  const renderCartItem = (item: CartItem) => (
-    <View key={item.id} style={styles.cartItem}>
-      <View style={styles.itemDetails}>
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemPrice}>${item.price} | Qty: {item.quantity}</Text>
-        <Text style={styles.itemAppointment}>Appointment: {item.appointment}</Text>
-      </View>
-      <View style={styles.itemActions}>
-        <TouchableOpacity onPress={() => updateQuantity(item.id, -1)} style={styles.quantityButton}>
-          <Text style={styles.quantityButtonText}>-</Text>
-        </TouchableOpacity>
-        <Text style={styles.quantityText}>{item.quantity}</Text>
-        <TouchableOpacity onPress={() => updateQuantity(item.id, 1)} style={styles.quantityButton}>
-          <Text style={styles.quantityButtonText}>+</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => removeItem(item.id)} style={styles.removeButton}>
-          <Ionicons name="trash-outline" size={24} color="#FF0000" />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-
   return (
-    <SafeAreaView style={styles.safeArea} edges={['left', 'right']}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.title}>Your Cart</Text>
-        
-        <View style={styles.cartItems}>
-          {cartItems.map(renderCartItem)}
-        </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }} edges={['bottom']}>
+      <ScrollView>
+        <Container>
+          {/* Warning Section */}
+          <WarningCard>
+            <WarningIcon>
+              <Ionicons name="warning-outline" size={20} color="#d35b5f" />
+            </WarningIcon>
+            <WarningText>
+              Final pricing is provided after consulting with me for accuracy.
+            </WarningText>
+          </WarningCard>
 
-        <View style={styles.promoCodeSection}>
-          <Text style={styles.sectionTitle}>Promo Code</Text>
-          <View style={styles.promoCodeInput}>
-            <TextInput 
-              style={styles.input} 
-              placeholder="Enter promo code"
-            />
-            <TouchableOpacity style={styles.applyButton} onPress={() => {}}>
-              <Text style={styles.applyButtonText}>Apply</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+          {/* Contact Information */}
+          <ContactInfoCard>
+            <ContactTitle>Contact Information</ContactTitle>
+            <ContactDetails>
+              <ContactText>+84932000000</ContactText>
+              <ContactText>amandamorgan@example.com</ContactText>
+            </ContactDetails>
+            <EditButton>
+              <EditButtonCircle>
+                <Ionicons name="create-outline" size={14} color="#FFFFFF" />
+              </EditButtonCircle>
+            </EditButton>
+          </ContactInfoCard>
 
-        <View style={styles.orderSummary}>
-          <Text style={styles.sectionTitle}>Order Summary</Text>
-          <View style={styles.summaryRow}>
-            <Text>Subtotal:</Text>
-            <Text>${subtotal.toFixed(2)}</Text>
-          </View>
-          <View style={styles.summaryRow}>
-            <Text>Tax:</Text>
-            <Text>${tax.toFixed(2)}</Text>
-          </View>
-          <View style={[styles.summaryRow, styles.totalRow]}>
-            <Text style={styles.totalText}>Total:</Text>
-            <Text style={styles.totalText}>${total.toFixed(2)}</Text>
-          </View>
-        </View>
+          {/* Cart Items */}
+          <CartItemCard>
+            <ItemImage />
+            <ItemInfo>
+              <ItemTitle>Small Tattoo Session</ItemTitle>
+              <ItemDetails>Appointment: Nov 12, 3 PM{'\n'}Total Hours range: 5 - 6</ItemDetails>
+              <ItemPrice>$170.00</ItemPrice>
+            </ItemInfo>
+            <ItemControls>
+              <MinusButton>
+                <Ionicons name="remove" size={20} color="#6478F2" />
+              </MinusButton>
+              <QuantityBox>
+                <QuantityText>1</QuantityText>
+              </QuantityBox>
+              <PlusButton>
+                <Ionicons name="add" size={20} color="#6478F2" />
+              </PlusButton>
+            </ItemControls>
+            <DeleteButton>
+              <Ionicons name="trash-outline" size={20} color="#d15151" />
+            </DeleteButton>
+          </CartItemCard>
 
-        <TouchableOpacity 
-          style={styles.showPriceBreakdown}
-          onPress={() => setShowBreakdown(!showBreakdown)}
-        >
-          <Text>Show Price Breakdown</Text>
-          <Ionicons name={showBreakdown ? "chevron-up" : "chevron-down"} size={24} color="#000" />
-        </TouchableOpacity>
+          <CartItemCard>
+            <ItemImage />
+            <ItemInfo>
+              <ItemTitle>Custom Tattoo Design</ItemTitle>
+              <ItemDetails>Pink, Size M</ItemDetails>
+              <ItemPrice>$75.00</ItemPrice>
+            </ItemInfo>
+            <ItemControls>
+              <MinusButton>
+                <Ionicons name="remove" size={20} color="#6478F2" />
+              </MinusButton>
+              <QuantityBox>
+                <QuantityText>1</QuantityText>
+              </QuantityBox>
+              <PlusButton>
+                <Ionicons name="add" size={20} color="#6478F2" />
+              </PlusButton>
+            </ItemControls>
+            <DeleteButton>
+              <Ionicons name="trash-outline" size={20} color="#d15151" />
+            </DeleteButton>
+          </CartItemCard>
 
-        {showBreakdown && (
-          <View style={styles.breakdownDetails}>
-            <View style={styles.breakdownRow}>
-              <Text>Total Hours:</Text>
-              <Text>5</Text>
-            </View>
-            <View style={styles.breakdownRow}>
-              <Text>Rate per Hour:</Text>
-              <Text>$100</Text>
-            </View>
-          </View>
-        )}
+          {/* Discount Section */}
+          <DiscountSection>
+            <DiscountInput>
+              <DiscountIcon>
+                <Ionicons name="pricetag-outline" size={24} color="#6478F2" />
+              </DiscountIcon>
+              <DiscountText>Enter Discount Code</DiscountText>
+              <ApplyText>Apply</ApplyText>
+            </DiscountInput>
+            <VoucherButton>
+              <VoucherText>Vouchers</VoucherText>
+            </VoucherButton>
+          </DiscountSection>
 
-        <Button 
-          title="Proceed to Checkout" 
-          onPress={() => console.log('Proceed to checkout')}
-          style={styles.checkoutButton}
-        />
+          {/* Applied Discounts */}
+          <AppliedDiscounts>
+            <DiscountTag>
+              <DiscountTagText>5% Discount</DiscountTagText>
+              <CloseButton>
+                <Ionicons name="close" size={16} color="#FFFFFF" />
+              </CloseButton>
+            </DiscountTag>
+            <DiscountTag>
+              <DiscountTagText>5% Discount</DiscountTagText>
+              <CloseButton>
+                <Ionicons name="close" size={16} color="#FFFFFF" />
+              </CloseButton>
+            </DiscountTag>
+            <DiscountTag>
+              <DiscountTagText>5% Discount</DiscountTagText>
+              <CloseButton>
+                <Ionicons name="close" size={16} color="#FFFFFF" />
+              </CloseButton>
+            </DiscountTag>
+          </AppliedDiscounts>
 
-        <Text style={styles.disclaimer}>
-          ⚠️ Final pricing is provided after consulting with the artist for accuracy.
-        </Text>
+          {/* Checkout Summary */}
+          <CheckoutSummary>
+            <SummaryRow>
+              <SummaryText>Subtotal</SummaryText>
+              <SummaryAmount>$245.00</SummaryAmount>
+            </SummaryRow>
+            <Divider />
+            <SummaryRow>
+              <SummaryText style={{ color: '#d15151' }}>You Saved</SummaryText>
+              <SummaryAmount style={{ color: '#d15151' }}>$36.75</SummaryAmount>
+            </SummaryRow>
+            <Divider />
+            <SummaryRow>
+              <SummaryText style={{ fontWeight: 'bold' }}>Total</SummaryText>
+              <SummaryAmount style={{ fontWeight: 'bold' }}>$208.25</SummaryAmount>
+            </SummaryRow>
+            <CheckoutButton>
+              <CheckoutText>Checkout</CheckoutText>
+            </CheckoutButton>
+          </CheckoutSummary>
+        </Container>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#F3F4F6',
-  },
-  scrollContent: {
-    flexGrow: 1,
-    paddingHorizontal: 15,
-    paddingTop: 0,
-    paddingBottom: 60,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 24,
-    marginTop: 16,
-  },
-  cartItems: {
-    marginBottom: 24,
-  },
-  cartItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  itemDetails: {
-    flex: 1,
-  },
-  itemName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  itemPrice: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 4,
-  },
-  itemAppointment: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 4,
-  },
-  itemActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  quantityButton: {
-    backgroundColor: '#E5E7EB',
-    borderRadius: 20,
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 5,
-  },
-  quantityButtonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  quantityText: {
-    fontSize: 16,
-    marginHorizontal: 10,
-  },
-  removeButton: {
-    marginLeft: 10,
-  },
-  promoCodeSection: {
-    marginBottom: 24,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 12,
-  },
-  promoCodeInput: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  input: {
-    flex: 1,
-    height: 40, // Set a fixed height
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    marginRight: 12,
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-  },
-  applyButton: {
-    height: 40, // Match the height of the input
-    paddingHorizontal: 16,
-    backgroundColor: '#607AFB',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
-  },
-  applyButtonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-  },
-  orderSummary: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 24,
-  },
-  summaryRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  totalRow: {
-    borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    paddingTop: 8,
-    marginTop: 8,
-  },
-  totalText: {
-    fontWeight: 'bold',
-  },
-  showPriceBreakdown: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 12,
-  },
-  breakdownDetails: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 24,
-  },
-  breakdownRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  checkoutButton: {
-    marginBottom: 24,
-  },
-  disclaimer: {
-    textAlign: 'center',
-    color: '#666',
-    marginTop: 16, // Add top margin
-    marginBottom: 24,
-    paddingTop: 16, // Add top padding
-  },
-});
+// Styled Components
+const Container = styled.View`
+  padding: 20px 20px 150px 20px;
+  background-color: #ffffff;
+`;
+
+const WarningCard = styled.View`
+  flex-direction: row;
+  align-items: center;
+  background-color: #fef2f2;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+`;
+
+const WarningIcon = styled.View`
+  margin-right: 8px;
+`;
+
+const WarningText = styled.Text`
+  font-size: 11px;
+  color: #d35b5f;
+  flex: 1;
+`;
+
+const CartItemCard = styled.View`
+  flex-direction: row;
+  background-color: #ffffff;
+  border-radius: 9px;
+  padding: 16px;
+  margin-bottom: 12px;
+  shadow-color: #000;
+  shadow-offset: 0px 5px;
+  shadow-opacity: 0.1;
+  shadow-radius: 10px;
+  elevation: 5;
+  position: relative;
+`;
+
+const ItemImage = styled.View`
+  width: 78px;
+  height: 85px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin-right: 16px;
+`;
+
+const ItemInfo = styled.View`
+  flex: 1;
+  margin-right: 16px;
+`;
+
+const ItemTitle = styled.Text`
+  font-size: 12px;
+  font-weight: 600;
+  color: #393939;
+  margin-bottom: 4px;
+`;
+
+const ItemDetails = styled.Text`
+  font-size: 10px;
+  color: #6f6f71;
+  margin-bottom: 8px;
+`;
+
+const ItemPrice = styled.Text`
+  font-size: 18px;
+  font-weight: bold;
+  color: #202020;
+`;
+
+const ItemControls = styled.View`
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+`;
+
+const MinusButton = styled.TouchableOpacity`
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  border: 2px solid #6478F2;
+  justify-content: center;
+  align-items: center;
+`;
+
+const QuantityBox = styled.View`
+  background-color: #e5e5fc;
+  border-radius: 7px;
+  width: 37px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 8px;
+`;
+
+const QuantityText = styled.Text`
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+`;
+
+const PlusButton = styled.TouchableOpacity`
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  border: 2px solid #6478F2;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DeleteButton = styled.TouchableOpacity`
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 25px;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DiscountSection = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin: 24px 0;
+`;
+
+const DiscountInput = styled.View`
+  flex-direction: row;
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 20px;
+  padding: 8px 12px;
+  width: 250px;
+  margin-right: 12px;
+`;
+
+const DiscountIcon = styled.View`
+  margin-right: 8px;
+`;
+
+const DiscountText = styled.Text`
+  font-size: 15px;
+  color: #c6c6c6;
+  flex: 1;
+`;
+
+const ApplyText = styled.Text`
+  font-size: 15px;
+  color: #6478F2;
+  font-weight: 500;
+`;
+
+const VoucherButton = styled.TouchableOpacity`
+  background-color: #e5e5fc;
+  border: 1px solid #6478F2;
+  border-radius: 20px;
+  padding: 8px 16px;
+  height: 39px;
+  justify-content: center;
+  align-items: center;
+  width: 94px;
+  position: absolute;
+  right: 0;
+  top: 0;
+`;
+
+const VoucherText = styled.Text`
+  color: #6478F2;
+  font-size: 13px;
+  font-weight: 600;
+`;
+
+const AppliedDiscounts = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+`;
+
+const DiscountTag = styled.View`
+  flex-direction: row;
+  align-items: center;
+  background-color: #6478F2;
+  border-radius: 20px;
+  padding: 4px 12px;
+`;
+
+const DiscountTagText = styled.Text`
+  color: #FFFFFF;
+  font-size: 12px;
+  margin-right: 8px;
+`;
+
+const CloseButton = styled.TouchableOpacity`
+  width: 16px;
+  height: 16px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CheckoutSummary = styled.View`
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 20px;
+  shadow-color: #000;
+  shadow-offset: 0px 0px;
+  shadow-opacity: 0.1;
+  shadow-radius: 10px;
+  elevation: 5;
+`;
+
+const SummaryRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 12px;
+`;
+
+const SummaryText = styled.Text`
+  font-size: 15px;
+  color: #000000;
+`;
+
+const SummaryAmount = styled.Text`
+  font-size: 15px;
+  color: #000000;
+`;
+
+const Divider = styled.View`
+  height: 1px;
+  background-color: #DEE1E6;
+  margin-vertical: 12px;
+`;
+
+const CheckoutButton = styled.TouchableOpacity`
+  background-color: #6478F2;
+  border-radius: 27px;
+  padding: 16px;
+  align-items: center;
+  margin-top: 16px;
+`;
+
+const CheckoutText = styled.Text`
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 500;
+`;
+
+const ContactInfoCard = styled.View`
+  width: 100%;
+  height: 85px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  padding: 16px;
+  margin-bottom: 24px;
+  position: relative;
+`;
+
+const ContactTitle = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: #202020;
+  letter-spacing: -0.14px;
+  margin-bottom: 2px;
+  margin-top: -6px;
+`;
+
+const ContactDetails = styled.View`
+  flex-direction: column;
+  gap: 0px;
+  margin-top: 4px;
+`;
+
+const ContactText = styled.Text`
+  font-size: 10px;
+  line-height: 15px;
+  color: #000000;
+  font-family: Nunito Sans;
+`;
+
+const EditButton = styled.TouchableOpacity`
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(0px);
+`;
+
+const EditButtonCircle = styled.View`
+  width: 31px;
+  height: 31px;
+  border-radius: 15.5px;
+  background-color: #6478F2;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default CartScreen;

@@ -1,0 +1,33 @@
+.root {
+  position: absolute;
+  left: 0;
+  right: 92.3077%;
+  top: 0;
+  bottom: 96.5116%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ellipse149 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: visible;
+}
+.icon {
+  width: 100%;
+  height: 100%;
+}
+.group1353 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+}
+.icon2 {
+  width: 100%;
+  height: 100%;
+}
